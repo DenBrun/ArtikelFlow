@@ -68,14 +68,14 @@ const Card = ({ word }) => {
   };
 
   return (
-    <div className="border border-gray-300 rounded-lg sm:p-8 p-5 text-center z-10 drop-shadow-[0_0_0.2rem_#ffffff70]">
+    <div className=" sm:w-max w-full border-gray-300 rounded-lg sm:px-10 sm:py-14 py-8 text-center z-10 drop-shadow-[0_0_0.2rem_#ffffff70]">
       <div className='h-full flex flex-col items-center justify-around'>
         <h2 className="text-2xl font-bold mb-14">{word_data.word}</h2>
-        <div className="flex flex-wrap justify-center gap-5">
+        <div className="flex flex-wrap justify-center sm:gap-8 gap-5">
           {options.map((option, index) => (
             <button
               key={index}
-              className={`font-semibold sm:px-6 px-4 sm:py-3 py-2 rounded-lg mb-4 transition duration-300 ease-in-out flex items-baseline gap-2 ${getButtonClasses(option)}`}
+              className={`font-semibold sm:px-6 px-6 sm:py-3 py-3 rounded-lg mb-4 transition duration-300 ease-in-out flex items-baseline gap-2 ${getButtonClasses(option)}`}
               onClick={() => checkAnswer(option)}
             >
               {option}
