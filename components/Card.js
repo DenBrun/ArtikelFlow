@@ -6,6 +6,7 @@ const Card = ({ word }) => {
   const [word_data, set_word_data] = useState(word);
   const [answerStatus, setAnswerStatus] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showTranslation, setshowTranslation] = useState(false);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -35,6 +36,9 @@ const Card = ({ word }) => {
         // setAnswerStatus(null); // Reset answer status
         // setSelectedAnswer(null); // Reset selected answer
       })
+      .catch(error => {
+        // return notFound()
+      });
   }
 
   const checkAnswer = (selectedOption) => {
@@ -68,9 +72,20 @@ const Card = ({ word }) => {
   };
 
   return (
-    <div className=" sm:w-max w-full border-gray-300 rounded-lg sm:px-10 sm:py-14 py-8 text-center z-10 drop-shadow-[0_0_0.2rem_#ffffff70]">
+    <div className=" sm:w-max w-full border-gray-300 rounded-lg sm:px-10 sm:py-14 py-8 text-center z-10 drop-shadow-[0_0_0.1rem_#ffffff70]">
       <div className='h-full flex flex-col items-center justify-around'>
-        <h2 className="text-2xl font-bold mb-14">{word_data.word}</h2>
+      <div className='mb-9'>
+        <div className="flex items-start justify-center ">
+            <h2 className="text-2xl font-bold">{word_data.word}</h2>
+            {/* <TranslationModal translation={word_data} setshowTranslation = {setshowTranslation}/> */}
+            <span className="cursor-pointer" onMouseEnter={() => setshowTranslation(true)} onMouseLeave={() =>setshowTranslation(false)}>
+              <span className=" w-4 text-sm inline-block text-blue-500 hover:text-blue-600">
+            ?
+              </span>
+            </span>
+        </div>
+        <p className={`font-thin mt-2 min-h-6 transition-opacity duration-500 ${showTranslation ? 'opacity-100' : 'opacity-0'}`}>{showTranslation && `(${word_data.level}) ${word_data.translation}`}</p>
+      </div>
         <div className="flex flex-wrap justify-center sm:gap-8 gap-5">
           {options.map((option, index) => (
             <button
