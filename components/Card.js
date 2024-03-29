@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useLevelState  } from './LevelProvider';
 
 const Card = ({ word }) => {
   const options = ['der', 'die', 'das'];
@@ -7,6 +8,8 @@ const Card = ({ word }) => {
   const [answerStatus, setAnswerStatus] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showTranslation, setshowTranslation] = useState(false);
+
+  const { levelState, setLevelState } = useLevelState();
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -28,7 +31,7 @@ const Card = ({ word }) => {
   }, [options]);
 
   const getNewWord = async () => {
-    fetch('http://127.0.0.1:8000/random_word')
+    fetch(`http://127.0.0.1:8000/random_word/${levelState}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -44,14 +47,12 @@ const Card = ({ word }) => {
   const checkAnswer = (selectedOption) => {
     setSelectedAnswer(selectedOption);
     if (selectedOption === word_data.artikel) {
-      console.log('Correct!');
       setAnswerStatus('correct');
       setTimeout(() => {
         setAnswerStatus(null); // Reset answer status
       }, 200);
       getNewWord();
     } else {
-      console.log('Incorrect!');
       setAnswerStatus('incorrect');
       setTimeout(() => {
         setAnswerStatus(null); // Reset answer status

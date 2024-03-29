@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export const Banner = () => {
+const Banner = () => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     useEffect(() => {
@@ -25,3 +25,5 @@ export const Banner = () => {
     </p>
   )
 }
+
+export default Banner;
