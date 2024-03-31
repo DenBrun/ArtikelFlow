@@ -5,11 +5,10 @@ import TabSelect from '@/components/TabSelect';
 import { notFound } from 'next/navigation'
 import { LevelProvider } from "@/components/LevelProvider";
 
-
 export default async function Home() { 
-  const word = await fetch('http://127.0.0.1:8000/random_word', {cache: 'no-store'})
-  .then(response => response.json())
+  const word = await fetch(process.env.URL + '/api/random_word', {cache: 'no-store'}).then(response => response.json())
   .catch(error => {
+    console.log(error);
     return notFound()
   });
 

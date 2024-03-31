@@ -31,7 +31,7 @@ const Card = ({ word }) => {
   }, [options]);
 
   const getNewWord = async () => {
-    fetch(`http://127.0.0.1:8000/random_word/${levelState}`)
+    fetch(`/api/random_word/${levelState}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -54,7 +54,7 @@ const Card = ({ word }) => {
       setAnswerStatus('incorrect');
       setTimeout(() => {
         setAnswerStatus(null); // Reset answer status
-      }, 200); // 
+      }, 200);
     }
   }
 
