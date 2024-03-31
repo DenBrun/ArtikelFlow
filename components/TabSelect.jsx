@@ -1,30 +1,27 @@
 'use client'
+import { useContext } from 'react';
 
-import { useLevelState  } from './LevelProvider';
 
-function DifficultyTabs() {
-    const { levelState, setLevelState } = useLevelState();
+function Tabs({ sharedStateContext, options, alignment }) {
+    const { sharedState, setSharedState } = useContext(sharedStateContext);
 
     const handleTabClick = (tabName) => {
-        setLevelState(tabName);
+        setSharedState(tabName);
     };
 
     return (
-        <div className="flex text-left">
-            <button
-                className={`pr-4 font-normal max-md:text-sm pb-2 mr-1 border-b-2 rounded-t-md ${levelState === 'Intermediate' ? 'border-blue-500' : 'border-gray-300'}`}
-                onClick={() => handleTabClick('Intermediate')}
-            >
-                Intermediate
-            </button>
-            <button
-                className={`pr-4 font-normal max-md:text-sm pb-2 mx-1 border-b-2 rounded-t-md ${levelState === 'Advanced' ? 'border-blue-500' : 'border-gray-300'}`}
-                onClick={() => handleTabClick('Advanced')}
-            >
-                Advanced
-            </button>
+        <div className={`flex gap-2`}>
+            {options.map((option, index) => (
+                <button
+                    key={index}
+                    className={`font-normal max-md:text-sm pb-2 border-b-2 rounded-t-md ${alignment == 'center' ? 'px-3' : alignment == 'right'? 'pr-1 pl-4' : 'pr-4 pl-1'} ${sharedState === option.value ? 'border-blue-500' : 'border-gray-300'}`}
+                    onClick={() => handleTabClick(option.value)}
+                >
+                    {option.label}
+                </button>
+            ))}
         </div>
     );
 }
 
-export default DifficultyTabs;
+export default Tabs;

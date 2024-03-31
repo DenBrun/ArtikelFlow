@@ -1,6 +1,7 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useLevelState  } from './LevelProvider';
+import { useState, useEffect, useContext } from 'react';
+import { LevelContext } from './LevelProvider';
+import { ViewPreferenceContext } from './ViewPreferenceProvider';
 
 const Card = ({ word }) => {
   const options = ['der', 'die', 'das'];
@@ -9,7 +10,8 @@ const Card = ({ word }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showTranslation, setshowTranslation] = useState(false);
 
-  const { levelState, setLevelState } = useLevelState();
+  const { sharedState: levelState } = useContext(LevelContext);
+  const { sharedState: viewPref } = useContext(ViewPreferenceContext);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -77,12 +79,13 @@ const Card = ({ word }) => {
         <div className="flex items-start justify-center ">
             <h2 className="text-2xl font-bold">{word_data.word}</h2>
             <span className="cursor-pointer" onMouseEnter={() => setshowTranslation(true)} onMouseLeave={() =>setshowTranslation(false)}>
-              <span className=" w-4 text-sm inline-block text-blue-500 hover:text-blue-600">
-            ?
+              {viewPref == 'Hint' && <span className=" w-4 text-sm inline-block text-blue-500 hover:text-blue-600">
+                ?
               </span>
+              }
             </span>
         </div>
-        <p className={`font-thin mt-2 min-h-6 transition-opacity duration-500 ${showTranslation ? 'opacity-100' : 'opacity-0'}`}>{showTranslation && `(${word_data.level}) ${word_data.translation}`}</p>
+        <p className={`font-thin mt-2 min-h-6 transition-opacity duration-500 ${showTranslation || viewPref == 'Always' ? 'opacity-100' : 'opacity-0'}`}>{(showTranslation || viewPref == 'Always') && `(${word_data.level}) ${word_data.translation}`}</p>
       </div>
         <div className="flex flex-wrap justify-center sm:gap-8 gap-5">
           {options.map((option, index) => (

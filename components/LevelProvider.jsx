@@ -1,34 +1,32 @@
 "use client";
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
-const LevelContext = createContext();
+export const LevelContext = createContext();
 
 export const LevelProvider = ({ children }) => {
     const [mounted, setMounted] = useState(false)
-    const [sharedLevelState, setSharedLevelState] = useState(null);
+    const [sharedState, setSharedState] = useState(null);
 
     useEffect(() =>  setMounted(true), [])
 
     useEffect(() => {
         const storedLevelState = localStorage.getItem('levelState');
         if (storedLevelState) {
-            setSharedLevelState(storedLevelState);
+            setSharedState(storedLevelState);
         }else{
-            setSharedLevelState('Intermediate');
+            setSharedState('Intermediate');
         }
     }, []);
 
     useEffect(() => {
         if (!mounted) return;
-        localStorage.setItem('levelState', sharedLevelState);
-        console.log('Level state updated:', sharedLevelState);
-    }, [sharedLevelState, mounted]);
+        localStorage.setItem('levelState', sharedState);
+    }, [sharedState, mounted]);
 
     return (
-        <LevelContext.Provider value={{ levelState: sharedLevelState, setLevelState: setSharedLevelState }}>
+        <LevelContext.Provider value={{ sharedState, setSharedState }}>
         {children}
         </LevelContext.Provider>
     );
 };
 
-export const useLevelState = () => useContext(LevelContext);
