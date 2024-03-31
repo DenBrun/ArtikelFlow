@@ -36,8 +36,6 @@ const Card = ({ word }) => {
       .then(data => {
         console.log(data);
         set_word_data(data);
-        // setAnswerStatus(null); // Reset answer status
-        // setSelectedAnswer(null); // Reset selected answer
       })
       .catch(error => {
         // return notFound()
@@ -78,7 +76,6 @@ const Card = ({ word }) => {
       <div className='mb-9'>
         <div className="flex items-start justify-center ">
             <h2 className="text-2xl font-bold">{word_data.word}</h2>
-            {/* <TranslationModal translation={word_data} setshowTranslation = {setshowTranslation}/> */}
             <span className="cursor-pointer" onMouseEnter={() => setshowTranslation(true)} onMouseLeave={() =>setshowTranslation(false)}>
               <span className=" w-4 text-sm inline-block text-blue-500 hover:text-blue-600">
             ?
