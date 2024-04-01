@@ -8,7 +8,7 @@ import { ViewPreferenceProvider, ViewPreferenceContext } from "@/components/View
 
 
 export default async function Home() { 
-  const word = await fetch(process.env.URL + '/api/random_word', {cache: 'no-store'}).then(response => response.json())
+  const word = await fetch('https://artikel-flow.vercel.app/api/random_word', {cache: 'no-store'}).then(response => response.json())
   .catch(error => {
     console.log(error);
     return notFound()
