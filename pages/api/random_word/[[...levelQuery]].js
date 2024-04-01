@@ -30,7 +30,7 @@ function getRandomWord(level, words_by_level) {
   }
 
   if (level === 'INTERMEDIATE') {
-    level = weightedRandom(['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], [0.2, 0.2, 0.2, 0.2, 0.1, 0.1]).item;
+    level = weightedRandom(['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], [0.2, 0.25, 0.25, 0.2, 0.05, 0.05]).item;
   } else if (level === 'ADVANCED') {
     level = weightedRandom(['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], [0.1, 0.1, 0.2, 0.2, 0.2, 0.2]).item;
   }
